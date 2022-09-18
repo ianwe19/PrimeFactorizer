@@ -5,7 +5,7 @@
 
 int getInput();
 bool findPrimeFactors(int num, std::vector<int>& primeNums);
-bool canBeBrokenDownFurther(std::vector<int>& primeNums);
+bool canBeBrokenDownFurther(int n);
 bool breakDownFurther(int num, std::vector<int>& primeNums);
 void outputMessage(int num, std::vector<int>& primeNums, bool isPrime);
 
@@ -16,9 +16,15 @@ int main() {
 
 	num = getInput();
 
-	outputMessage(num, primeNums, findPrimeFactors(num, primeNums));
-	breakDownFurther(num, primeNums);
-	outputMessage(num, primeNums, false);
+	findPrimeFactors(num, primeNums);
+
+	for (int i = 0; i < primeNums.size(); i++) {
+		while (canBeBrokenDownFurther(primeNums.at(i))) {
+			breakDownFurther(primeNums.at(i), primeNums);
+		}
+	}
+	
+	outputMessage(num, primeNums, true);
 }
 
 
@@ -50,42 +56,28 @@ bool findPrimeFactors(int num, std::vector<int>& primeNums) {
 }
 
 
-bool canBeBrokenDownFurther(std::vector<int>& primeNums) {
-	for (int n : primeNums) {
-		for (int i = 2; i < n; i++) {
-			if (n % i == 0) { // runs if composite
-				return true;
-			}
+bool canBeBrokenDownFurther(int n) {
+	for (int i = 2; i < n; i++) {
+		if (n % i == 0) { // runs if composite
+			return true;
 		}
 	}
+
 	return false;
 }
 
 
-bool breakDownFurther(int num, std::vector<int>& primeNums) {
-	while (canBeBrokenDownFurther(primeNums)) {
-		int index = int(0);
-		for (int n : primeNums) {
-			for (int i = 2; i < n; i++) {
-				if (n % i == 0) { // runs if composite
-					primeNums.insert(primeNums.begin(), i);
-					primeNums.at(index + 1) = n / i;
+bool breakDownFurther(int n, std::vector<int>& primeNums) {
+	for (int i = 2; i < n; i++) {
+		if (n % i == 0) { // runs if composite
+			primeNums.insert(primeNums.begin(), i);
+			primeNums.at(i  - 1) = n / i;
 
 
-
-					// primeNums.push_back(primeNums.at(index + 1));
-					// primeNums.at(index) = n / i;
-					//primeNums.push_back(i);
-
-					// std::rotate(primeNums.begin(), primeNums.begin() + index + 2, primeNums.end());
-
-					break;
-				}
-			}
-			index++;
+			break;
 		}
-		
 	}
+		
 	return true;
 }
 
