@@ -78,4 +78,3 @@ void outputMessage(int num, std::vector<int>& primeNums, bool isPrime) {
 		std::cout << std::setw(3) << n << std::setw(1) << " has been found as a prime factor.\n";
 	}
 }
-
