@@ -36,21 +36,20 @@ int getInput() { // TODO make this sanitize input
 
 
 bool isPrime(int num, std::vector<int>& primeNums) {
-	bool result;
-
 	for (int i = 2; i < num; i++) { // starts at 2 because 0 and 1 are not prime
 		if (num % i == 0) { // runs if composite
 			primeNums.push_back(i);
-			if (i * i == num) {
+			if (i * i == num) { // adds value twice when applicable e.g. 3 and 3 for 9
 				primeNums.push_back(i);
 			}
-			result = false;
-		}
-		else { // runs if prime
-			result = true;
 		}
 	}
-	return result;
+	if (primeNums.empty()) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 
