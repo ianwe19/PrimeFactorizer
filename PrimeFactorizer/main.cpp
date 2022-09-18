@@ -6,19 +6,22 @@
 int getInput();
 bool findPrimeFactors(int num, std::vector<int>& primeNums);
 bool canBeBrokenDownFurther(std::vector<int>& primeNums);
-bool breakDownFurther(int num, std::vector<int>& primeNums);
+void breakDownFurther(int num, std::vector<int>& primeNums);
 void outputMessage(int num, std::vector<int>& primeNums, bool isPrime);
 
 
 int main() {
 	int num = int(0);
+	bool isPrime = NULL;
 	std::vector<int> primeNums = {};
 
 	num = getInput();
 
-	outputMessage(num, primeNums, findPrimeFactors(num, primeNums));
+	isPrime = findPrimeFactors(num, primeNums);
+
 	breakDownFurther(num, primeNums);
-	outputMessage(num, primeNums, false);
+
+	outputMessage(num, primeNums, isPrime);
 }
 
 
@@ -31,13 +34,12 @@ int getInput() { // TODO make this sanitize input
 }
 
 
-// builds vector of prime factors and returns whether input is prime or composite, kind of a hot mess and really slow
+// builds vector of  first 2 prime factors and returns whether input is prime or composite
 bool findPrimeFactors(int num, std::vector<int>& primeNums) {
 	for (int i = 2; i < num; i++) {
 		if (num % i == 0) { // runs if composite
-			primeNums.clear();
-			primeNums.push_back(num / i);
 			primeNums.push_back(i);
+			primeNums.push_back(num / i);
 			break;
 		}
 	}
@@ -50,6 +52,7 @@ bool findPrimeFactors(int num, std::vector<int>& primeNums) {
 }
 
 
+// iterates through primeNums to check for composite numbers and returns true if found
 bool canBeBrokenDownFurther(std::vector<int>& primeNums) {
 	for (int n : primeNums) {
 		for (int i = 2; i < n; i++) {
@@ -62,7 +65,8 @@ bool canBeBrokenDownFurther(std::vector<int>& primeNums) {
 }
 
 
-bool breakDownFurther(int num, std::vector<int>& primeNums) {
+// find factors of factors
+void breakDownFurther(int num, std::vector<int>& primeNums) {
 	while (canBeBrokenDownFurther(primeNums)) {
 		int index = int(0);
 		for (int n : primeNums) {
@@ -70,23 +74,12 @@ bool breakDownFurther(int num, std::vector<int>& primeNums) {
 				if (n % i == 0) { // runs if composite
 					primeNums.insert(primeNums.begin(), i);
 					primeNums.at(index + 1) = n / i;
-
-
-
-					// primeNums.push_back(primeNums.at(index + 1));
-					// primeNums.at(index) = n / i;
-					//primeNums.push_back(i);
-
-					// std::rotate(primeNums.begin(), primeNums.begin() + index + 2, primeNums.end());
-
 					break;
 				}
 			}
 			index++;
 		}
-		
 	}
-	return true;
 }
 
 
