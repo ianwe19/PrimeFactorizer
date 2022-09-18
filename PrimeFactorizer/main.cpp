@@ -53,6 +53,8 @@ bool findPrimeFactors(int num, std::vector<int>& primeNums) {
 				if (primeNums.at(j) == num && num % i == 0) {
 					primeNums.push_back(i); // append and write factors 
 					primeNums.at(j) = num / i;
+
+
 				}
 			}
 		}
