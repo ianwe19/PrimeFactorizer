@@ -18,6 +18,7 @@ int main() {
 
 	outputMessage(num, primeNums, findPrimeFactors(num, primeNums));
 	breakDownFurther(num, primeNums);
+	outputMessage(num, primeNums, false);
 }
 
 
@@ -62,20 +63,28 @@ bool canBeBrokenDownFurther(std::vector<int>& primeNums) {
 
 
 bool breakDownFurther(int num, std::vector<int>& primeNums) {
-	int index = int(0);
-	for (int n : primeNums) {
-		for (int i = 2; i < n; i++) {
-			if (n % i == 0) { // runs if composite
-				primeNums.push_back(primeNums.at(index + 1));
-				primeNums.at(index) = n / i;
-				//primeNums.push_back(i);
+	while (canBeBrokenDownFurther(primeNums)) {
+		int index = int(0);
+		for (int n : primeNums) {
+			for (int i = 2; i < n; i++) {
+				if (n % i == 0) { // runs if composite
+					primeNums.insert(primeNums.begin(), i);
+					primeNums.at(index + 1) = n / i;
 
-				// std::rotate(primeNums.begin(), primeNums.begin() + index + 2, primeNums.end());
 
-				break;
+
+					// primeNums.push_back(primeNums.at(index + 1));
+					// primeNums.at(index) = n / i;
+					//primeNums.push_back(i);
+
+					// std::rotate(primeNums.begin(), primeNums.begin() + index + 2, primeNums.end());
+
+					break;
+				}
 			}
+			index++;
 		}
-		index++;
+		
 	}
 	return true;
 }
