@@ -52,11 +52,9 @@ bool findPrimeFactors(int num, std::vector<int>& primeNums) {
 	else {
 		for (int i = 2; i < num; i++) {
 			for (int j = 0; j < primeNums.size(); j++) {
-				if (primeNums.at(j) == num) {
-					if (num % i == 0) {
-						primeNums.push_back(num / i);
-						primeNums.at(j) = i;
-					}
+				if (primeNums.at(j) == num && num % i == 0) {
+					primeNums.push_back(num / i);
+					primeNums.at(j) = i;
 				}
 			}
 		}
