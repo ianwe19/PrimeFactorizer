@@ -69,6 +69,7 @@ bool canBeBrokenDownFurther(std::vector<int>& primeNums) {
 			}
 		}
 	}
+
 	return false;
 }
 
