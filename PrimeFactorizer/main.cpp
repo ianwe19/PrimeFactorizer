@@ -5,6 +5,7 @@
 
 int getInput();
 bool findPrimeFactors(int num, std::vector<int>& primeNums);
+bool breakDownFurther(int num, std::vector<int>& primeNums);
 void outputMessage(int num, std::vector<int>& primeNums, bool isPrime);
 
 
@@ -46,6 +47,19 @@ bool findPrimeFactors(int num, std::vector<int>& primeNums) {
 }
 
 
+bool breakDownFurther(int num, std::vector<int>& primeNums) {
+	for (int n : primeNums) {
+		for (int i = 2; i < num; i++) {
+			if (num % i == 0) { // runs if composite
+				primeNums.push_back(num / i);
+				primeNums.push_back(i);
+				break;
+			}
+		}
+	}
+}
+
+
 void outputMessage(int num, std::vector<int>& primeNums, bool isPrime) {
 	if (isPrime) {
 		std::cout << num << " is a PRIME number.\n";
@@ -54,7 +68,7 @@ void outputMessage(int num, std::vector<int>& primeNums, bool isPrime) {
 		std::cout << num << " is a COMPOSITE number.\n";
 	}
 	
-	for (int n: primeNums) {
+	for (int n : primeNums) {
 		std::cout << std::setw(3) << n << std::setw(1) << " has been found as a prime factor.\n";
 	}
 }
