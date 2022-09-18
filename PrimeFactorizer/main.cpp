@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <vector>
 
 
@@ -8,19 +9,10 @@ void outputMessage(int num, std::vector<int>& primeNums, bool isPrime);
 
 
 int main() {
-
+	int num = int(0);
 	std::vector<int> primeNums = {};
 
-	int num = int(0);
-
 	num = getInput();
-
-	/*if (isPrime(num, primeNums)) {
-		std::cout << ""
-	}
-	else {
-		
-	}*/
 
 	outputMessage(num, primeNums, findPrimeFactors(num, primeNums));
 }
@@ -85,6 +77,6 @@ void outputMessage(int num, std::vector<int>& primeNums, bool isPrime) {
 	}
 	
 	for (int n: primeNums) {
-		std::cout << n << " has been found as a prime factor.\n";
+		std::cout << std::setw(3) << n << std::setw(1) << " has been found as a prime factor.\n";
 	}
 }
