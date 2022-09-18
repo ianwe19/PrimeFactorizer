@@ -1,7 +1,6 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
-#include <limits>
 
 
 const int MIN_NUM = 2;
@@ -47,8 +46,8 @@ int getInput() {
 bool findPrimeFactors(int num, std::vector<int>& primeNums) {
 	for (int i = 2; i < num; i++) {
 		if (num % i == 0) { // runs if composite
-			primeNums.push_back(i); // add both factors to primeNums
-			primeNums.push_back(num / i);
+			primeNums.push_back(num / i); // add both factors to primeNums
+			primeNums.push_back(i);
 			break;
 		}
 	}
