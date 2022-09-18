@@ -3,7 +3,7 @@
 
 
 int getInput();
-bool isPrime(int num, std::vector<int>& primeNums);
+bool findPrimeFactors(int num, std::vector<int>& primeNums);
 void outputMessage(int num, std::vector<int>& primeNums, bool isPrime);
 
 
@@ -22,7 +22,7 @@ int main() {
 		
 	}*/
 
-	outputMessage(num, primeNums, isPrime(num, primeNums));
+	outputMessage(num, primeNums, findPrimeFactors(num, primeNums));
 }
 
 
@@ -35,21 +35,37 @@ int getInput() { // TODO make this sanitize input
 }
 
 
-bool isPrime(int num, std::vector<int>& primeNums) {
-	for (int i = 2; i < num; i++) { // starts at 2 because 0 and 1 are not prime
-		if (num % i == 0) { // runs if composite
-			primeNums.push_back(i);
-			if (i * i == num) { // adds value twice when applicable e.g. 3 and 3 for 9
+bool findPrimeFactors(int num, std::vector<int>& primeNums) {
+
+	if (!primeNums.empty()) {
+		for (int i = 2; i < num; i++) {
+			if (num % i == 0) { // runs if composite
+
+				primeNums.clear();
 				primeNums.push_back(i);
+				primeNums.push_back(num / i);
+
+				break;
 			}
 		}
 	}
+	else {
+
+	}
+
 	if (primeNums.empty()) {
 		return true;
 	}
-	else {
-		return false;
+
+	for (int n : primeNums) {
+		for (int i = 2; i < num; i++) {
+			if (n % i == 0) {
+				findPrimeFactors(n, primeNums);
+			}
+		}
 	}
+
+	return false;
 }
 
 
@@ -61,7 +77,7 @@ void outputMessage(int num, std::vector<int>& primeNums, bool isPrime) {
 		std::cout << num << " is a COMPOSITE number.\n";
 	}
 	
-	for (int i: primeNums) {
-		std::cout << i << " has been found as a prime factor.\n";
+	for (int n: primeNums) {
+		std::cout << n << " has been found as a prime factor.\n";
 	}
 }
