@@ -1,6 +1,10 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <limits>
+
+
+const int MIN_NUM = 2;
 
 
 int getInput();
@@ -25,10 +29,15 @@ int main() {
 }
 
 
-int getInput() { // TODO make this sanitize input
+int getInput() {
 	int num = int(0);
-	std::cout << "Enter a number: ";
-	std::cin >> num;
+
+	while (!(std::cin) || num <= MIN_NUM) { // for input sanitization
+		std::cin.clear();
+		std::cout << "Enter a number greater than 2: ";
+		std::cin >> num;
+		rewind(stdin); // clear buffer
+	}
 
 	return num;
 }
@@ -38,7 +47,7 @@ int getInput() { // TODO make this sanitize input
 bool findPrimeFactors(int num, std::vector<int>& primeNums) {
 	for (int i = 2; i < num; i++) {
 		if (num % i == 0) { // runs if composite
-			primeNums.push_back(i);
+			primeNums.push_back(i); // add both factors to primeNums
 			primeNums.push_back(num / i);
 			break;
 		}
@@ -52,7 +61,7 @@ bool findPrimeFactors(int num, std::vector<int>& primeNums) {
 }
 
 
-// iterates through primeNums to check for composite numbers and returns true if found
+// iterate through primeNums to check for composite numbers and returns true if found
 bool canBeBrokenDownFurther(std::vector<int>& primeNums) {
 	for (int n : primeNums) {
 		for (int i = 2; i < n; i++) {
