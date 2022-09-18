@@ -37,7 +37,7 @@ int getInput() { // TODO make this sanitize input
 
 bool findPrimeFactors(int num, std::vector<int>& primeNums) {
 
-	if (!primeNums.empty()) {
+	if (primeNums.size() == 0) {
 		for (int i = 2; i < num; i++) {
 			if (num % i == 0) { // runs if composite
 
@@ -50,15 +50,24 @@ bool findPrimeFactors(int num, std::vector<int>& primeNums) {
 		}
 	}
 	else {
-
+		for (int i = 2; i < num; i++) {
+			for (int j = 0; j < primeNums.size(); j++) {
+				if (primeNums.at(j) == num) {
+					if (num % i == 0) {
+						primeNums.push_back(num / i);
+						primeNums.at(j) = i;
+					}
+				}
+			}
+		}
 	}
 
-	if (primeNums.empty()) {
+	if (primeNums.size() == 0) {
 		return true;
 	}
 
 	for (int n : primeNums) {
-		for (int i = 2; i < num; i++) {
+		for (int i = 2; i < n; i++) {
 			if (n % i == 0) {
 				findPrimeFactors(n, primeNums);
 			}
